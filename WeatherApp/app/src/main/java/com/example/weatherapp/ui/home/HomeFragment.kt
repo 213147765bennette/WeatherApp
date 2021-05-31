@@ -1,5 +1,6 @@
 package com.example.weatherapp.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,15 +12,18 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.weatherapp.MoreForecastInfo
 import com.example.weatherapp.R
+import com.example.weatherapp.`interface`.RecycleViewItemClickInterface
 import com.example.weatherapp.model.FiveDaysForecast
 import com.example.weatherapp.response.FiveForecastResponse
 import com.example.weatherapp.ui.adapter.ForecastAdapter
+import com.google.gson.annotations.SerializedName
 import java.text.DecimalFormat
 import java.util.*
 
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment() ,RecycleViewItemClickInterface{
 
     companion object{
         private val TAG = "HomeFragment"
@@ -27,7 +31,8 @@ class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var forecastAdapter: ForecastAdapter
-    private var fiveForecastResponse:List<FiveForecastResponse> = listOf()
+    //private var fiveForecastResponse:List<FiveForecastResponse> = listOf()
+    private var fiveForecastResponse:List<FiveForecastResponse.Cod> = listOf()
     private var forecast:List<FiveDaysForecast> = listOf<FiveDaysForecast>()
     private lateinit var fivedayForecast: FiveDaysForecast
     //private lateinit var recylerView: RecyclerView
@@ -59,10 +64,11 @@ class HomeFragment : Fragment() {
 
         val recyclerView: RecyclerView = root.findViewById(R.id.rv_fivedays_forecast)
 
+        //fiveForecastResponse = ArrayList()
         fiveForecastResponse = ArrayList()
         //var forecast:List<FiveForecastResponse> = listOf(fiveForecastResponse)
 
-        forecastAdapter = ForecastAdapter(fiveForecastResponse)
+        forecastAdapter = ForecastAdapter(fiveForecastResponse,this)
 
 
         //used to observe the top current temperature
@@ -93,11 +99,17 @@ class HomeFragment : Fragment() {
                 val fiveForecastResponse: FiveForecastResponse = it
                 val forecast:List<FiveForecastResponse> = listOf(fiveForecastResponse)
 
-                Log.d(TAG,"VIEW_MODEL_CAST_DATA $forecast")
+                var fivedaysList:List<FiveForecastResponse.Cod> = it.list
 
-                forecastAdapter = ForecastAdapter(forecast)
+                Log.d(TAG,"VIEW_MODEL_CAST_DATA $fivedaysList")
+
+                //forecastAdapter = ForecastAdapter(forecast)
+
+                forecastAdapter = ForecastAdapter(fivedaysList,this)
+
 
                 forecastAdapter.setList(forecast)
+
 
                 //inflating the customadapter
                 recyclerView.apply {
@@ -133,6 +145,15 @@ class HomeFragment : Fragment() {
         var formatedVal = decimalFormat.format(digtValue)
 
        return formatedVal
+    }
+
+
+
+    override fun onItemClicked(data: FiveForecastResponse.Cod, position: Int) {
+        Log.d(TAG,"HAPPY_AM_CLIKED_IN_FRAGMENT")
+
+        val intent = Intent(activity,MoreForecastInfo::class.java)
+        startActivity(intent)
     }
 
 

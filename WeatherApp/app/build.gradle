@@ -87,6 +87,9 @@ dependencies {
     //Link: https://github.com/ReactiveX/RxAndroid
     implementation "io.reactivex.rxjava3:rxandroid:$rxandroid_version"
 
+    //Metarial Dialogs
+    //Link: https://github.com/afollestad/material-dialogs
+    implementation "com.afollestad.material-dialogs:core:$material_dialog_core_version"
 
-    
+
 }

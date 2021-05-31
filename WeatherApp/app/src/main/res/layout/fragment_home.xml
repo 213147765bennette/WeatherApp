@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:background="@color/weather_blue"
     android:id="@+id/main_layout"
     tools:context=".ui.home.HomeFragment">
 
-<!--
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
--->
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -207,12 +208,20 @@
 
         </androidx.cardview.widget.CardView>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_fivedays_forecast"
+        <View
+            android:id="@+id/view_space"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="3dp"
-            app:layout_constraintTop_toBottomOf="@id/weather_cardview" />
+            android:layout_height="1dp"
+            app:layout_constraintTop_toBottomOf="@id/weather_cardview"
+            android:background="@android:color/white" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_fivedays_forecast"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="2dp"
+        android:background="@color/weather_blue"
+        app:layout_constraintTop_toBottomOf="@id/weather_cardview" />
 
 
 
@@ -231,6 +240,4 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-<!--
-</ScrollView>-->
+</ScrollView>
