@@ -150,14 +150,6 @@ class HomeFragment : Fragment() , ForecastAdapter.RecycleViewItemClickInterface 
 
            Log.d(TAG,"VIEW_CURRENT: $it")
 
-            //inflating the customadapter
-           recyclerView.apply {
-               layoutManager = linearLayoutManager
-
-               adapter = forecastAdapter
-
-           }
-
 
         })
 
