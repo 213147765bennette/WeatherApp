@@ -18,4 +18,7 @@ interface FiveForecastDataDao {
     @Query("SELECT * from forecast ORDER BY id DESC")
     fun getAllFavourates(): Observable<List<FiveforecastEntity>>
 
+    @Delete
+    fun delete(fiveforecastEntity: FiveforecastEntity):Single<Int>
+
 }

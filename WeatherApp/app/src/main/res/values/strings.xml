@@ -15,7 +15,7 @@
     <string name="min">min</string>
 
     <string name="dialog_delete">Delete</string>
-    <string name="dialog_delete_title">Delete</string>
+    <string name="dialog_delete_title">Delete Favourates</string>
     <string name="dialog_success_title">Great</string>
     <string name="dialog_deleted_title">Oops!</string>
 
@@ -32,6 +32,9 @@
     <string name="dialog_message">Adding forecast data to your favourites list.</string>
     <string name="dialog_add_message">You data was added successfully to favourates.</string>
 
+    <string name="gps_title">Location Settings</string>
+    <string name="gps_msg">For better experience, please enable your locations</string>
+    <string name="gps_button_name">Enable</string>
 
 
     <string name="API_KEY">3c2c9119fd96f5765412b2eb67d81316</string>

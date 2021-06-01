@@ -1,6 +1,7 @@
 package com.example.weatherapp.ui.home
 
 import android.content.Intent
+import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -23,7 +24,7 @@ import java.util.*
 class HomeFragment : Fragment() , ForecastAdapter.RecycleViewItemClickInterface {
 
     companion object{
-        private val TAG = "HomeFragment"
+        val TAG = "HomeFragment"
     }
 
     private lateinit var homeViewModel: HomeViewModel
@@ -167,21 +168,24 @@ class HomeFragment : Fragment() , ForecastAdapter.RecycleViewItemClickInterface 
     override fun onItemClick(data: FiveForecastResponse.Cod, position: Int) {
         Log.d(TAG,"HAPPY_AM_CLIKED_IN_FRAGMENT")
 
+        //used toast for testing
         //Toast.makeText(context,"clods: ${data.clouds} ${data.main.temp}",Toast.LENGTH_LONG).show()
 
         /*  to also include
           :city.name
           country name*/
-           var doubleVal:Double =  fivedaysList.get(0).main.temp
-            Log.d(TAG, doubleVal.toString())
+
+        var doubleVal:Double =  fivedaysList.get(0).main.temp
+
+        Log.d(TAG, doubleVal.toString())
 
         val intent = Intent(activity, MoreForecastInfo::class.java)
-         /*  intent.putExtra("TEMPERATURE",fivedaysList.get(0).main.temp)
+           intent.putExtra("TEMPERATURE",fivedaysList.get(0).main.temp)
            intent.putExtra("TEMPMIN",fivedaysList.get(0).main.tempMin)
            intent.putExtra("TEMPMAX",fivedaysList.get(0).main.tempMax)
            intent.putExtra("MAINDESCR", fivedaysList.get(0).weather[0].main)
            intent.putExtra("FULLDESCR", fivedaysList.get(0).weather[0].description)
-           intent.putExtra("ICON", fivedaysList.get(0).weather[0].icon)*/
+           intent.putExtra("ICON", fivedaysList.get(0).weather[0].icon)
 
            /* intent.putExtra("TEMPERATURE","25")
             intent.putExtra("TEMPMIN","12")
@@ -192,6 +196,8 @@ class HomeFragment : Fragment() , ForecastAdapter.RecycleViewItemClickInterface 
 
         startActivity(intent)
     }
+
+
 
 
 

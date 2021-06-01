@@ -1,6 +1,7 @@
 package com.example.weatherapp.ui.forecast
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -14,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.example.weatherapp.R
+import com.example.weatherapp.ui.home.HomeFragment
 import com.example.weatherapp.ui.home.HomeViewModel
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import java.text.DecimalFormat
@@ -102,7 +104,7 @@ class MoreForecastInfo : AppCompatActivity() {
 
     }
 
-    //in here i define my dialogs
+    //in here observe live data from my model
     private fun observers(){
 
         foreCastViewModel.isError.observe(this, Observer {
@@ -161,6 +163,7 @@ class MoreForecastInfo : AppCompatActivity() {
             //now insert the data to roomdb
             foreCastViewModel.insertForecast()
 
+
         }
 
         dialog.negativeButton {
@@ -182,6 +185,8 @@ class MoreForecastInfo : AppCompatActivity() {
 
         dialog.positiveButton {
             dialog.dismiss()
+
+
         }
 
         dialog.show()

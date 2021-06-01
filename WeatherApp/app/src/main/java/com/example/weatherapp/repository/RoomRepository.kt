@@ -9,4 +9,9 @@ import com.example.weatherapp.local.db.DatabaseService
 class RoomRepository(private val databaseService: DatabaseService) {
 
     fun insert(fiveforecastEntity: FiveforecastEntity) = databaseService.fiveForecastDataDao().insert(fiveforecastEntity)
+
+    fun getFavourates() = databaseService.fiveForecastDataDao().getAllFavourates()
+
+    fun deleteFaourates(fiveforecastEntity: FiveforecastEntity) = databaseService.fiveForecastDataDao().delete(fiveforecastEntity)
+
 }
