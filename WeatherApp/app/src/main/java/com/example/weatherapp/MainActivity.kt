@@ -100,8 +100,8 @@ class MainActivity : AppCompatActivity() {
     fun askforGps(){
 
         var locationManager: LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        var gps_enabled:Boolean  = false
-        var network_enabled:Boolean  = false
+        var gps_enabled: Boolean
+        var network_enabled: Boolean
 
         gps_enabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
 

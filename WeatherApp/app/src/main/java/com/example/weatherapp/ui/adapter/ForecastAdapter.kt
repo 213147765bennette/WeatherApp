@@ -135,7 +135,6 @@ class ForecastAdapter(var forecast: List<FiveForecastResponse.Cod>, var clicklis
             temperature.text = covertedTemp +"\u2103"
 
 
-
             itemView.setOnClickListener {
                action.onItemClick(data,adapterPosition)
             }

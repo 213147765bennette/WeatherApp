@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -171,28 +172,31 @@ class HomeFragment : Fragment() , ForecastAdapter.RecycleViewItemClickInterface 
         //used toast for testing
         //Toast.makeText(context,"clods: ${data.clouds} ${data.main.temp}",Toast.LENGTH_LONG).show()
 
-        /*  to also include
-          :city.name
-          country name*/
-
         var doubleVal:Double =  fivedaysList.get(0).main.temp
 
         Log.d(TAG, doubleVal.toString())
 
         val intent = Intent(activity, MoreForecastInfo::class.java)
-           intent.putExtra("TEMPERATURE",fivedaysList.get(0).main.temp)
-           intent.putExtra("TEMPMIN",fivedaysList.get(0).main.tempMin)
-           intent.putExtra("TEMPMAX",fivedaysList.get(0).main.tempMax)
-           intent.putExtra("MAINDESCR", fivedaysList.get(0).weather[0].main)
-           intent.putExtra("FULLDESCR", fivedaysList.get(0).weather[0].description)
-           intent.putExtra("ICON", fivedaysList.get(0).weather[0].icon)
 
-           /* intent.putExtra("TEMPERATURE","25")
-            intent.putExtra("TEMPMIN","12")
-            intent.putExtra("TEMPMAX","85")
-            intent.putExtra("MAINDESCR", "Rain")
-            intent.putExtra("FULLDESCR", "Shower Rain")
-            intent.putExtra("ICON", "Clear")*/
+        intent.putExtra("TEMPERATURE",fivedaysList.get(0).main.temp.toString())
+        intent.putExtra("TEMPMIN",fivedaysList.get(0).main.tempMin.toString())
+        intent.putExtra("TEMPMAX",fivedaysList.get(0).main.tempMax.toString())
+        intent.putExtra("MAINDESCR", fivedaysList.get(0).weather[0].main)
+        intent.putExtra("FULLDESCR", fivedaysList.get(0).weather[0].description)
+        intent.putExtra("CITY_NAME", fivedaysList.get(0).weather[0].description)
+        intent.putExtra("WEEKDAY", fivedaysList.get(0).weather[0].description)
+        intent.putExtra("DATE", fivedaysList.get(0).weather[0].description)
+
+
+
+
+
+        /* intent.putExtra("TEMPERATURE","25")
+         intent.putExtra("TEMPMIN","12")
+         intent.putExtra("TEMPMAX","85")
+         intent.putExtra("MAINDESCR", "Rain")
+         intent.putExtra("FULLDESCR", "Shower Rain")
+         intent.putExtra("ICON", "Clear")*/
 
         startActivity(intent)
     }

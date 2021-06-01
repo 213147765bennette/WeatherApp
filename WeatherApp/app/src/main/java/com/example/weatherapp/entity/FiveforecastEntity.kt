@@ -23,6 +23,12 @@ data class FiveforecastEntity(
     @ColumnInfo(name = "description")
     var description: String,
     @ColumnInfo(name = "icon")
-    var icon: String
+    var icon: String,
+    @ColumnInfo(name = "city_name")
+    var city_name: String,
+    @ColumnInfo(name = "date")
+    var date: String,
+    @ColumnInfo(name = "week_day")
+    var week_day: String
 
 )

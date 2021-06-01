@@ -1,7 +1,9 @@
 package com.example.weatherapp.ui.home
 
 import android.app.Application
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -75,7 +77,9 @@ class HomeViewModel: ViewModel() {
 
                     },
                     {
+
                         Log.d(TAG,"ERRRORO ${it.localizedMessage}")
+
                     }
                 )
         )

@@ -37,6 +37,10 @@ class MoreForecastInfoViewModel(application: Application): AndroidViewModel(appl
     val isSuccess: MutableLiveData<Boolean> = MutableLiveData()
     val isDeleted: MutableLiveData<Boolean> = MutableLiveData()
     val icon: MutableLiveData<String> = MutableLiveData()
+    val date: MutableLiveData<String> = MutableLiveData()
+    val week_day: MutableLiveData<String> = MutableLiveData()
+    val city_name: MutableLiveData<String> = MutableLiveData()
+    val country: MutableLiveData<String> = MutableLiveData()
 
 
 
@@ -47,12 +51,12 @@ class MoreForecastInfoViewModel(application: Application): AndroidViewModel(appl
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {
-                        // Log.d(TAG,"Saved forecast weather data to favourites: $it")
+                        Log.d("MOREVIEW_MODEL_TAG","Saved forecast weather data to favourites: $it")
 
                         isSuccess.value = true
 
                     },{
-                      //  Log.e(TAG,"Error saving forecast weather to favourites!!")
+                        Log.e("MOREVIEW_MODEL_TAG","Error saving forecast weather to favourites!!")
 
                         isError.value = it.localizedMessage
                     }
@@ -68,7 +72,10 @@ class MoreForecastInfoViewModel(application: Application): AndroidViewModel(appl
             temp_max = temp_max.value.toString(),
             main = main_descr.value.toString(),
             description = full_description.value.toString(),
-            icon = icon.toString()
+            icon = icon.toString(),
+            city_name = city_name.value.toString(),
+            date = date.value.toString(),
+            week_day =  week_day.value.toString()
 
         )
     }

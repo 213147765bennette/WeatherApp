@@ -9,10 +9,13 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.room.ColumnInfo
+import androidx.room.PrimaryKey
 import com.afollestad.materialdialogs.MaterialDialog
 import com.example.weatherapp.R
 import com.example.weatherapp.ui.home.HomeFragment
@@ -34,6 +37,10 @@ class MoreForecastInfo : AppCompatActivity() {
     private lateinit var txtMainDescr: TextView
     private lateinit var txtFullDescr: TextView
     private lateinit var imgIcon: ImageView
+    private lateinit var txtDate: TextView
+    private lateinit var txtWeekDay: TextView
+    private lateinit var txtCityNAme: TextView
+
 
     var doubleTemperatue:Double = 0.0
     var doubleTemMin:Double = 0.0
@@ -73,14 +80,22 @@ class MoreForecastInfo : AppCompatActivity() {
         txtMainDescr = findViewById(R.id.txtMain)
         txtFullDescr = findViewById(R.id.txtDescription)
         imgIcon = findViewById(R.id.imgIcon)
+        txtDate = findViewById(R.id.txtDate)
+        txtWeekDay = findViewById(R.id.txtWeekDay)
+        txtCityNAme = findViewById(R.id.txtCityNAme)
 
 
         //now set values to show on my design
-        txtTemperature.text = intent.getStringExtra("TEMPERATURE") + "\u2103"
-        txtTempMin.text = intent.getStringExtra("TEMPMIN")+ "\u2103"
-        txtTempMax.text = intent.getStringExtra("TEMPMAX")+ "\u2103"
-        txtMainDescr.text = intent.getStringExtra("MAINDESCR")
-        txtFullDescr.text = intent.getStringExtra("FULLDESCR")
+        txtTemperature.text = intent.getStringExtra("TEMPERATURE").toString() + "\u2103"
+        txtTempMin.text = intent.getStringExtra("TEMPMIN").toString()+ "\u2103"
+        txtTempMax.text = intent.getStringExtra("TEMPMAX").toString()+ "\u2103"
+        txtMainDescr.text = intent.getStringExtra("MAINDESCR").toString()
+        txtFullDescr.text = intent.getStringExtra("FULLDESCR").toString()
+        txtCityNAme.text = intent.getStringExtra("CITY_NAME").toString()
+        txtWeekDay.text = intent.getStringExtra("WEEKDAY").toString()
+        txtDate.text = intent.getStringExtra("DATE").toString()
+
+
 
 
         //intent.putExtra("ICON", fivedaysList.get(0).weather[0].icon)
@@ -153,6 +168,9 @@ class MoreForecastInfo : AppCompatActivity() {
             foreCastViewModel.main_descr.value = "Sun"
             foreCastViewModel.full_description.value = "Very Sunny"
             foreCastViewModel.icon.value = "Clear"
+            foreCastViewModel.city_name.value = "Tembisa"
+            foreCastViewModel.week_day.value = "Saturday"
+            foreCastViewModel.date.value = "21-May-2021"
 
 
             //here to call the method of persiting to roomdb

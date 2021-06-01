@@ -76,10 +76,15 @@ class FavouritresAdapter(
         private val txtMainDescr = itemView.findViewById<TextView>(R.id.txtMain)
         private val txtFullDescr = itemView.findViewById<TextView>(R.id.txtDescription)
         private val weatherIcon = itemView.findViewById<ImageView>(R.id.imgIcon)
+        private val txtDate = itemView.findViewById<TextView>(R.id.txtDate)
+        private val txtWeekDay = itemView.findViewById<TextView>(R.id.txtWeekDay)
         private val deleteButton = itemView.findViewById<ShapeableImageView>(R.id.fab_favourites)
 
+        //CITY
+        private val txtCityName = itemView.findViewById<TextView>(R.id.txtDate)
         //here am assigning the returned values to all relevent fields
 
+        @SuppressLint("SetTextI18n")
         fun bind(data: FiveforecastEntity){
 
             Log.d(TAG,"BINDING_DATA $data")
@@ -89,6 +94,10 @@ class FavouritresAdapter(
             txtTempMax.text = data.temp_max +"\u2103"
             txtMainDescr.text = data.main+"\u2103"
             txtFullDescr.text = data.description+"\u2103"
+
+            txtDate.text = data.date
+            txtWeekDay.text = data.week_day
+            txtCityName.text = data.city_name
 
             //will use the returned text to set weather icon:
             var iconText: String? = data.icon
@@ -117,6 +126,15 @@ class FavouritresAdapter(
             }
 
 
+        }
+
+        @RequiresApi(Build.VERSION_CODES.O)
+        fun getWeekdays(digtValue: String):String{
+
+            var inputFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
+            var outputFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("EEEE", Locale.ENGLISH)
+
+            return LocalDate.parse(digtValue,inputFormat).format(outputFormat)
         }
 
     }
