@@ -37,7 +37,6 @@ class FiveDaysForecastViewModel(application: Application) : ViewModel() {
     val week_day: MutableLiveData<String> = MutableLiveData()
 
 
-
     fun insertForecast(){
         compositeDisposable.add(
             roomRepository.insert(createInsertForecastData())

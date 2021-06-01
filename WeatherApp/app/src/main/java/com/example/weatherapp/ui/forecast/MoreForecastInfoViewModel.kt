@@ -40,8 +40,6 @@ class MoreForecastInfoViewModel(application: Application): AndroidViewModel(appl
     val isDeleted: MutableLiveData<Boolean> = MutableLiveData()
     val icon: MutableLiveData<String> = MutableLiveData()
     val date: MutableLiveData<String> = MutableLiveData()
-    val week_day: MutableLiveData<String> = MutableLiveData()
-    val city_name: MutableLiveData<String> = MutableLiveData()
     val pressure: MutableLiveData<String> = MutableLiveData()
     val feelsLike: MutableLiveData<String> = MutableLiveData()
 
@@ -81,6 +79,7 @@ class MoreForecastInfoViewModel(application: Application): AndroidViewModel(appl
 
         )
     }
+
 
 }
 

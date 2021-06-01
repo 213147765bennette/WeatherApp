@@ -41,12 +41,6 @@ class MoreForecastInfo : AppCompatActivity() {
     private lateinit var txtPressure: TextView
     private lateinit var txtFells: TextView
 
-
-    var doubleTemperatue:Double = 0.0
-    var doubleTemMin:Double = 0.0
-    var doubleTempMax:Double = 0.0
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_more_forecast_info)
@@ -163,7 +157,7 @@ class MoreForecastInfo : AppCompatActivity() {
             foreCastViewModel.temp_max.value = intent.getStringExtra("TEMPMAX").toString()+ "\u2103"
             foreCastViewModel.main_descr.value = intent.getStringExtra("MAINDESCR").toString()
             foreCastViewModel.full_description.value = intent.getStringExtra("FULLDESCR").toString()
-            foreCastViewModel.icon.value = intent.getStringExtra("ICON")
+            foreCastViewModel.icon.value = intent.getStringExtra("ICON").toString()
             foreCastViewModel.pressure.value = intent.getStringExtra("PRESSURE").toString()+ "\u2103"
             foreCastViewModel.feelsLike.value = intent.getStringExtra("FEELS").toString()+ "\u2103"
             foreCastViewModel.date.value = intent.getStringExtra("DATE").toString()

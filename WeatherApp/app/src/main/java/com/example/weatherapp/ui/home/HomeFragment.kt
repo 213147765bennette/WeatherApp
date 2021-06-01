@@ -1,6 +1,8 @@
 package com.example.weatherapp.ui.home
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Color
 import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
@@ -14,6 +16,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toDrawable
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -49,6 +52,7 @@ class HomeFragment : Fragment() , ForecastAdapter.RecycleViewItemClickInterface 
     }
 
 
+    @SuppressLint("ResourceAsColor")
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
@@ -94,22 +98,33 @@ class HomeFragment : Fragment() , ForecastAdapter.RecycleViewItemClickInterface 
 
                Log.d(TAG,"===========CLOUDS============")
                layoutImage.setBackgroundResource(R.drawable.sea_cloudy)
-               weather_cardview.setBackgroundColor(resources.getColor(R.color.cloudy) )
+               weather_cardview.setCardBackgroundColor(Color.parseColor("#54717A"))
                recyclerView.setBackgroundColor(resources.getColor(R.color.cloudy))
 
            }else if (it.weather.get(0).main.equals("Clear")){
 
                Log.d(TAG,"===========CLEAR============")
-               layoutImage.setBackgroundResource(R.drawable.sea_rainy)
-               weather_cardview.setBackgroundColor(resources.getColor(R.color.rainy) )
-               recyclerView.setBackgroundColor(resources.getColor(R.color.rainy))
+               layoutImage.setBackgroundResource(R.drawable.sea_sunnypng)
+               //weather_cardview.setCardBackgroundColor(R.color.sunny)
+               recyclerView.setBackgroundColor(resources.getColor(R.color.weather_blue))
+               weather_cardview.setCardBackgroundColor(Color.parseColor("#4c94e3"))
 
-           }else if (it.weather.get(0).main.equals("Rain")){
+           }else if (it.weather.get(0).main.equals("Sunny")){
+
+               Log.d(TAG,"===========CLEAR============")
+               layoutImage.setBackgroundResource(R.drawable.sea_sunnypng)
+               //weather_cardview.setCardBackgroundColor(R.color.sunny)
+               recyclerView.setBackgroundColor(resources.getColor(R.color.weather_blue))
+               weather_cardview.setCardBackgroundColor(Color.parseColor("#4c94e3"))
+
+           }
+           else if (it.weather.get(0).main.equals("Rain")){
 
                Log.d(TAG,"===========RAIN============")
                layoutImage.setBackgroundResource(R.drawable.sea_rainy)
-              weather_cardview.setBackgroundColor(resources.getColor(R.color.rainy) )
+              //weather_cardview.setBackgroundColor(resources.getColor(R.color.rainy) )
               recyclerView.setBackgroundColor(resources.getColor(R.color.rainy))
+               weather_cardview.setCardBackgroundColor(Color.parseColor("#57575D"))
 
            }
 
@@ -201,7 +216,7 @@ class HomeFragment : Fragment() , ForecastAdapter.RecycleViewItemClickInterface 
         //used toast for testing
         //Toast.makeText(context,"clods: ${data.clouds} ${data.main.temp}",Toast.LENGTH_LONG).show()
 
-        Toast.makeText(context,"POSITION CLICKED: ${position}",Toast.LENGTH_LONG).show()
+        //Toast.makeText(context,"POSITION CLICKED: ${position}",Toast.LENGTH_LONG).show()
 
         var dateTimeText:String = getWeekdays(data.dtTxt)
 
@@ -211,8 +226,8 @@ class HomeFragment : Fragment() , ForecastAdapter.RecycleViewItemClickInterface 
         intent.putExtra("TEMPERATURE",data.main.temp.toString())
         intent.putExtra("TEMPMIN",data.main.tempMin.toString())
         intent.putExtra("TEMPMAX",data.main.tempMax.toString())
-        intent.putExtra("MAINDESCR", data.weather[position].main)
-        intent.putExtra("FULLDESCR", data.weather[position].description)
+        intent.putExtra("MAINDESCR", data.weather[0].main)
+        intent.putExtra("FULLDESCR", data.weather[0].description)
         intent.putExtra("PRESSURE", data.main.pressure.toString())
         intent.putExtra("FEELS", data.main.feelsLike.toString())
         intent.putExtra("DATE", dateTimeText)
