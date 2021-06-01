@@ -15,7 +15,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-class GalleryViewModel(application: Application) : ViewModel(){
+class GalleryViewModel(application: Application) : AndroidViewModel(application) {
 
     companion object{
         private val TAG = "GalleryViewModel"
@@ -29,8 +29,6 @@ class GalleryViewModel(application: Application) : ViewModel(){
     val isLoading: MutableLiveData<Boolean> = MutableLiveData()
     val isError: MutableLiveData<String> = MutableLiveData()
     val isDeleted: MutableLiveData<Boolean> = MutableLiveData()
-    val favouratesList : MutableLiveData<List<FiveforecastEntity>> = MutableLiveData()
-
     val forecastId : MutableLiveData<Long> = MutableLiveData()
     val temperature: MutableLiveData<String> = MutableLiveData()
     val temp_min: MutableLiveData<String> = MutableLiveData()
@@ -38,6 +36,7 @@ class GalleryViewModel(application: Application) : ViewModel(){
     val main: MutableLiveData<String> = MutableLiveData()
     val description: MutableLiveData<String> = MutableLiveData()
     val icon: MutableLiveData<String> = MutableLiveData()
+    val favouratesList : MutableLiveData<List<FiveforecastEntity>> = MutableLiveData()
 
     //To be included
     val city_name: MutableLiveData<String> = MutableLiveData()
@@ -116,7 +115,7 @@ class GalleryViewModel(application: Application) : ViewModel(){
             temp_max = temp_max.value.toString(),
             main = main.value.toString(),
             description = description.value.toString(),
-            icon = icon.toString()
+            icon = icon.value.toString()
         )
     }
 

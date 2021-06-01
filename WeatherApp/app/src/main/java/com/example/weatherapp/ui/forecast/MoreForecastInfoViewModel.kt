@@ -5,11 +5,9 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.example.weatherapp.entity.FiveforecastEntity
 import com.example.weatherapp.local.db.DatabaseService
 import com.example.weatherapp.repository.RoomRepository
-import com.example.weatherapp.ui.home.HomeViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -41,7 +39,7 @@ class MoreForecastInfoViewModel(application: Application): AndroidViewModel(appl
     val icon: MutableLiveData<String> = MutableLiveData()
 
 
-    @SuppressLint("LongLogTag")
+
     fun insertForecast(){
         compositeDisposable.add(
             roomRepository.insert(createInsertForecastData())
@@ -49,12 +47,12 @@ class MoreForecastInfoViewModel(application: Application): AndroidViewModel(appl
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {
-                         Log.d(TAG,"Saved forecast weather data to favourites: $it")
+                        // Log.d(TAG,"Saved forecast weather data to favourites: $it")
 
                         isSuccess.value = true
 
                     },{
-                        Log.e(TAG,"Error saving forecast weather to favourites!!")
+                      //  Log.e(TAG,"Error saving forecast weather to favourites!!")
 
                         isError.value = it.localizedMessage
                     }
@@ -65,11 +63,11 @@ class MoreForecastInfoViewModel(application: Application): AndroidViewModel(appl
     fun createInsertForecastData(): FiveforecastEntity {
 
         return FiveforecastEntity(
-            temperature = temperature.toString(),
-            temp_min =  temp_min.toString(),
-            temp_max = temp_max.toString(),
-            main = main_descr.toString(),
-            description = full_description.toString(),
+            temperature = temperature.value.toString(),
+            temp_min =  temp_min.value.toString(),
+            temp_max = temp_max.value.toString(),
+            main = main_descr.value.toString(),
+            description = full_description.value.toString(),
             icon = icon.toString()
 
         )

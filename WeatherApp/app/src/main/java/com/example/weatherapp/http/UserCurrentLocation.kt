@@ -14,4 +14,5 @@ import com.google.android.gms.location.*
  */
 class UserCurrentLocation {
 
+
 }

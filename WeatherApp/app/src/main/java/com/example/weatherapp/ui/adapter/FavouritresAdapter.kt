@@ -79,7 +79,7 @@ class FavouritresAdapter(
         private val deleteButton = itemView.findViewById<ShapeableImageView>(R.id.fab_favourites)
 
         //here am assigning the returned values to all relevent fields
-        @SuppressLint("SetTextI18n")
+
         fun bind(data: FiveforecastEntity){
 
             Log.d(TAG,"BINDING_DATA $data")

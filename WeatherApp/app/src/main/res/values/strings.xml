@@ -19,6 +19,9 @@
     <string name="dialog_success_title">Great</string>
     <string name="dialog_deleted_title">Oops!</string>
 
+    <string name="empty_list">Oops Sorry!</string>
+    <string name="empty_list_msg">Sorry no favourates added as yet!</string>
+
     <string name="dialog_error_title">Error!</string>
     <string name="dialog_error_msg">An error occurred please try again!</string>
 

@@ -43,7 +43,6 @@ class GalleryFragment : Fragment() {
     ): View? {
 
 
-
         galleryViewModel =
                 ViewModelProvider(this).get(GalleryViewModel::class.java)
 
@@ -61,6 +60,7 @@ class GalleryFragment : Fragment() {
 
             layoutManager = linearLayoutManager
             adapter = fouvaratesAdapter
+
         }
 
         val textView: TextView = root.findViewById(R.id.text_gallery)
@@ -91,9 +91,32 @@ class GalleryFragment : Fragment() {
 
         galleryViewModel.favouratesList.observe(viewLifecycleOwner, Observer {
 
+            if (it.isEmpty()){
+                showEmptyFavouratesListDialog()
+            }
+
             fouvaratesAdapter.setList(it)
 
+
+
         })
+
+    }
+
+    //show this  dialog when favourates list is empty
+    private fun showEmptyFavouratesListDialog(){
+
+        val dialog = MaterialDialog(requireContext())
+            .cornerRadius(8f)
+            .cancelable(false)
+            .title(R.string.empty_list)
+            .message(R.string.empty_list_msg)
+
+        dialog.positiveButton {
+            dialog.dismiss()
+        }
+
+        dialog.show()
 
     }
 
