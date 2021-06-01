@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.room.ColumnInfo
 import androidx.room.PrimaryKey
+import com.example.weatherapp.MainActivity
 import com.example.weatherapp.entity.FiveforecastEntity
 import com.example.weatherapp.http.Networking
 import com.example.weatherapp.http.WeatherApis
@@ -19,6 +20,7 @@ import com.example.weatherapp.response.TopCurrentResponse
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
+import retrofit2.http.Query
 
 class HomeViewModel: ViewModel() {
 
@@ -42,12 +44,65 @@ class HomeViewModel: ViewModel() {
 
         currentTaskRepository = TaskRepository(Networking.currentWeatherRetriver(WeatherApis.BASE_URL))
 
+        //call function to get current weather using Users current lat and lon
+        getTopUserCurrentWeather(MainActivity.latitude.toString(),MainActivity.longitude.toString())
+
+        //call function to get five days forecast weather data using Users current lat and lon
+        getFiveDaysUserCurrentForecast(MainActivity.latitude.toString(),MainActivity.longitude.toString())
+
         //call function to get current weather data
-        getTopCurrentWeather()
+        // getTopCurrentWeather()
 
         //call function to get five days forecast
-        getFiveDaysForecast()
+        //getFiveDaysForecast()
+
     }
+
+
+    //function to get current temperature from the api
+    fun getTopUserCurrentWeather(lat:String, lon:String){
+        Log.d(TAG,"ENTER_HERE")
+        compositeDisposable.add(
+            currentTaskRepository.getUserTopCurrentWeather(lat,lon)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        currentTopWeatherLive.value = it
+                        Log.d(TAG,"USER WEATHER DATA WITH LON LAT: $it")
+
+                        Log.d(TAG,"USER LAT: ${MainActivity.latitude} USER LON: ${MainActivity.longitude}")
+
+                    },
+                    {
+                        Log.d(TAG,"ERRRORO ${it.localizedMessage}")
+                    }
+                )
+        )
+    }
+
+    //fivedays forecast using user current lat and lon values
+    fun getFiveDaysUserCurrentForecast(lat:String, lon:String){
+
+        Log.d(TAG,"ENTER_FORECAST")
+
+        compositeDisposable.add(
+            currentTaskRepository.getFiveDaysUserLocationForecast(lat,lon)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        fivedaysForcastWeatherLive.value = it
+                        Log.d(TAG,"FIVE DAYS WEATHER FORECAST: $it")
+                    },
+                    {
+                        Log.d(TAG,"ERRR ${it.localizedMessage}")
+                    }
+                )
+        )
+    }
+
+
 
     //function to get current temperature from the api
     fun getTopCurrentWeather(){
@@ -68,6 +123,7 @@ class HomeViewModel: ViewModel() {
         )
     }
 
+    //fivedays forecast using hardcoded lat lon values
     fun getFiveDaysForecast(){
 
         Log.d(TAG,"ENTER_FORECAST")
@@ -87,6 +143,7 @@ class HomeViewModel: ViewModel() {
                 )
         )
     }
+
 
 
     private val _text = MutableLiveData<String>().apply {
