@@ -22,4 +22,11 @@
         android:name="com.example.weatherapp.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_location"
         tools:layout="@layout/fragment_slideshow" />
+
+    <fragment
+        android:id="@+id/nav_more_forecast"
+        android:name="com.example.weatherapp.ui.forecast.FiveDaysForecastFragment"
+        android:label="Forecast Details"
+        tools:layout="@layout/five_days_forecast_fragment"/>
+
 </navigation>

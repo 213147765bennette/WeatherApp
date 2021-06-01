@@ -12,18 +12,15 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.weatherapp.MoreForecastInfo
+import com.example.weatherapp.ui.forecast.MoreForecastInfo
 import com.example.weatherapp.R
-import com.example.weatherapp.`interface`.RecycleViewItemClickInterface
-import com.example.weatherapp.model.FiveDaysForecast
 import com.example.weatherapp.response.FiveForecastResponse
 import com.example.weatherapp.ui.adapter.ForecastAdapter
-import com.google.gson.annotations.SerializedName
 import java.text.DecimalFormat
 import java.util.*
 
 
-class HomeFragment : Fragment() ,RecycleViewItemClickInterface{
+class HomeFragment : Fragment() , ForecastAdapter.RecycleViewItemClickInterface {
 
     companion object{
         private val TAG = "HomeFragment"
@@ -33,9 +30,9 @@ class HomeFragment : Fragment() ,RecycleViewItemClickInterface{
     private lateinit var forecastAdapter: ForecastAdapter
     //private var fiveForecastResponse:List<FiveForecastResponse> = listOf()
     private var fiveForecastResponse:List<FiveForecastResponse.Cod> = listOf()
-    private var forecast:List<FiveDaysForecast> = listOf<FiveDaysForecast>()
-    private lateinit var fivedayForecast: FiveDaysForecast
+    lateinit var fivedaysList:List<FiveForecastResponse.Cod>
     //private lateinit var recylerView: RecyclerView
+    lateinit var  root:View
 
     private val linearLayoutManager: LinearLayoutManager by lazy {
         LinearLayoutManager(context)
@@ -51,7 +48,9 @@ class HomeFragment : Fragment() ,RecycleViewItemClickInterface{
 
         homeViewModel =
                 ViewModelProvider(this).get(HomeViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_home, container, false)
+
+
+        root  = inflater.inflate(R.layout.fragment_home, container, false)
 
 
         val textView: TextView = root.findViewById(R.id.text_home)
@@ -90,6 +89,20 @@ class HomeFragment : Fragment() ,RecycleViewItemClickInterface{
 
            Log.d(TAG,"VIEW_CURRENT: $it")
 
+           if(it.weather.get(0).main.equals("Clear")){
+
+               root  = inflater.inflate(R.layout.fragment_home_rainny, container, false)
+
+           }else if (it.weather.get(0).main.equals("Rain")){
+
+               Log.d(TAG,"===========RAIN============")
+               root  = inflater.inflate(R.layout.fragment_home_rainny, container, false)
+
+           }else if (it.weather.get(0).main.equals("Sun")){
+
+               root  = inflater.inflate(R.layout.fragment_home_rainny, container, false)
+           }
+
         })
 
 
@@ -99,7 +112,7 @@ class HomeFragment : Fragment() ,RecycleViewItemClickInterface{
                 val fiveForecastResponse: FiveForecastResponse = it
                 val forecast:List<FiveForecastResponse> = listOf(fiveForecastResponse)
 
-                var fivedaysList:List<FiveForecastResponse.Cod> = it.list
+                fivedaysList = it.list
 
                 Log.d(TAG,"VIEW_MODEL_CAST_DATA $fivedaysList")
 
@@ -111,10 +124,13 @@ class HomeFragment : Fragment() ,RecycleViewItemClickInterface{
                 forecastAdapter.setList(forecast)
 
 
+
                 //inflating the customadapter
                 recyclerView.apply {
                     layoutManager = linearLayoutManager
+
                     adapter = forecastAdapter
+
                 }
 
                 //here making sure that the found record is displayed at the very first top
@@ -130,8 +146,8 @@ class HomeFragment : Fragment() ,RecycleViewItemClickInterface{
         })
 
 
-        //used to get the 5 days Forecast weather results
 
+        //used to get the 5 days Forecast weather results
 
 
         return root
@@ -148,13 +164,35 @@ class HomeFragment : Fragment() ,RecycleViewItemClickInterface{
     }
 
 
-
-    override fun onItemClicked(data: FiveForecastResponse.Cod, position: Int) {
+    override fun onItemClick(data: FiveForecastResponse.Cod, position: Int) {
         Log.d(TAG,"HAPPY_AM_CLIKED_IN_FRAGMENT")
 
-        val intent = Intent(activity,MoreForecastInfo::class.java)
+        //Toast.makeText(context,"clods: ${data.clouds} ${data.main.temp}",Toast.LENGTH_LONG).show()
+
+        /*  to also include
+          :city.name
+          country name*/
+           var doubleVal:Double =  fivedaysList.get(0).main.temp
+            Log.d(TAG, doubleVal.toString())
+
+        val intent = Intent(activity, MoreForecastInfo::class.java)
+         /*  intent.putExtra("TEMPERATURE",fivedaysList.get(0).main.temp)
+           intent.putExtra("TEMPMIN",fivedaysList.get(0).main.tempMin)
+           intent.putExtra("TEMPMAX",fivedaysList.get(0).main.tempMax)
+           intent.putExtra("MAINDESCR", fivedaysList.get(0).weather[0].main)
+           intent.putExtra("FULLDESCR", fivedaysList.get(0).weather[0].description)
+           intent.putExtra("ICON", fivedaysList.get(0).weather[0].icon)*/
+
+           /* intent.putExtra("TEMPERATURE","25")
+            intent.putExtra("TEMPMIN","12")
+            intent.putExtra("TEMPMAX","85")
+            intent.putExtra("MAINDESCR", "Rain")
+            intent.putExtra("FULLDESCR", "Shower Rain")
+            intent.putExtra("ICON", "Clear")*/
+
         startActivity(intent)
     }
+
 
 
 }

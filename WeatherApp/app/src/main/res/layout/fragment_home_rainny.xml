@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/weather_blue"
+    android:background="@color/rainy"
     android:id="@+id/main_layout"
     tools:context=".ui.home.HomeFragment">
 
@@ -14,12 +14,13 @@
         android:layout_height="wrap_content">
 
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/weather_image"
             android:orientation="vertical"
-            android:background="@drawable/sea_sunnypng"
+            android:background="@drawable/sea_rainy"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -58,7 +59,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:backgroundTint="@color/weather_blue"
+            android:backgroundTint="@color/rainy"
             app:layout_constraintTop_toBottomOf="@id/weather_image"
             android:orientation="vertical">
 
@@ -215,13 +216,13 @@
             app:layout_constraintTop_toBottomOf="@id/weather_cardview"
             android:background="@android:color/white" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_fivedays_forecast"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="2dp"
-        android:background="@color/weather_blue"
-        app:layout_constraintTop_toBottomOf="@id/weather_cardview" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_fivedays_forecast"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="2dp"
+            android:background="@color/rainy"
+            app:layout_constraintTop_toBottomOf="@id/weather_cardview" />
 
 
 

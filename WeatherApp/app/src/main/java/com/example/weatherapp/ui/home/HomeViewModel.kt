@@ -1,11 +1,17 @@
 package com.example.weatherapp.ui.home
 
+import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.room.ColumnInfo
+import androidx.room.PrimaryKey
+import com.example.weatherapp.entity.FiveforecastEntity
 import com.example.weatherapp.http.Networking
 import com.example.weatherapp.http.WeatherApis
+import com.example.weatherapp.local.db.DatabaseService
+import com.example.weatherapp.repository.RoomRepository
 import com.example.weatherapp.repository.TaskRepository
 import com.example.weatherapp.response.CurrentTaskResponse
 import com.example.weatherapp.response.FiveForecastResponse
@@ -23,13 +29,9 @@ class HomeViewModel: ViewModel() {
 
     //using compositeDisposable so that i avoid multiple threads making may calls while others are still active
     private val compositeDisposable = CompositeDisposable()
+
+    //Repositories that will help me to perform all my operations
     val currentTaskRepository: TaskRepository
-
-
-    val currentTemp: MutableLiveData<String> = MutableLiveData()
-    val mainDescription: MutableLiveData<String> = MutableLiveData()
-    val min: MutableLiveData<String> = MutableLiveData()
-    val max: MutableLiveData<String> = MutableLiveData()
 
     val currentWeatherLive: MutableLiveData<CurrentTaskResponse> = MutableLiveData()
     val currentTopWeatherLive: MutableLiveData<TopCurrentResponse> = MutableLiveData()
@@ -86,12 +88,14 @@ class HomeViewModel: ViewModel() {
         )
     }
 
+
     private val _text = MutableLiveData<String>().apply {
 
         value = "This is home Fragment"
     }
 
     val text: LiveData<String> = _text
+
 
     override fun onCleared() {
         compositeDisposable.clear()

@@ -16,7 +16,10 @@
     <color name="weather_blue">#4c94e3</color>
     <color name="weather_blue_two">#3c74b3</color>
     <color name="weather_blue_three">#3e7cbb</color>
+
+
     <color name="sunny">#47AB2F</color>
     <color name="cloudy">#54717A</color>
     <color name="rainy">#57575D</color>
+
 </resources>

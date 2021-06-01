@@ -14,5 +14,25 @@
     <string name="current">current</string>
     <string name="min">min</string>
 
+    <string name="dialog_delete">Delete</string>
+    <string name="dialog_delete_title">Delete</string>
+    <string name="dialog_success_title">Great</string>
+    <string name="dialog_deleted_title">Oops!</string>
+
+    <string name="dialog_error_title">Error!</string>
+    <string name="dialog_error_msg">An error occurred please try again!</string>
+
+    <string name="dialog_deleted_msg">You data was deleted successfully</string>
+    <string name="dialog_success_msg">You data was saved successfully</string>
+    <string name="dialog_delete_msg">Are you sure do you want to delete?</string>
+
+
+    <string name="dialog_save">Save</string>
+    <string name="dialog_add_title">Add to favourites?</string>
+    <string name="dialog_message">Adding forecast data to your favourites list.</string>
+    <string name="dialog_add_message">You data was added successfully to favourates.</string>
+
+
+
     <string name="API_KEY">3c2c9119fd96f5765412b2eb67d81316</string>
 </resources>

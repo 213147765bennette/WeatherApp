@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/main_more_info_layout"
-    tools:context=".MoreForecastInfo">
+    tools:context=".ui.forecast.MoreForecastInfo">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/main_cardview_1"
@@ -89,6 +89,8 @@
                             android:textColor="@color/white"
                             android:textSize="12sp" />
 
+
+
                         <TextView
                             android:id="@+id/txtTemp_value"
                             android:layout_width="wrap_content"
@@ -99,12 +101,12 @@
                             android:fontFamily="sans-serif-condensed"
                             android:maxWidth="180dp"
                             android:maxLength="100"
-                            android:maxLines="2"
                             android:padding="0dp"
                             android:singleLine="false"
                             android:text="6"
                             android:textColor="@color/white"
                             android:textSize="12dp" />
+
 
                     </LinearLayout>
 
@@ -136,11 +138,11 @@
                             android:layout_marginTop="1dp"
                             android:layout_marginBottom="1dp"
                             android:fontFamily="sans-serif-condensed"
-                            android:maxLines="2"
                             android:singleLine="false"
                             android:text="-24"
                             android:textColor="@color/white"
                             android:textSize="12dp" />
+
 
                     </LinearLayout>
 
@@ -169,7 +171,6 @@
                             android:layout_marginTop="1dp"
                             android:layout_marginBottom="1dp"
                             android:fontFamily="sans-serif-condensed"
-                            android:maxLines="2"
                             android:singleLine="false"
                             android:text="85"
                             android:textColor="@color/white"

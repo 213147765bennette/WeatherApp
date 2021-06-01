@@ -1,21 +1,20 @@
 package com.example.weatherapp.ui.adapter
 
-import android.content.Intent
+import android.annotation.SuppressLint
 import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.weatherapp.MoreForecastInfo
 import com.example.weatherapp.R
-import com.example.weatherapp.`interface`.RecycleViewItemClickInterface
 import com.example.weatherapp.response.FiveForecastResponse
+import com.example.weatherapp.ui.forecast.MoreForecastInfo
 import java.text.DecimalFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -25,7 +24,8 @@ import java.util.*
 /**
  * created by {Bennette Molepo} on {5/28/2021}.
  */
-class ForecastAdapter(private val forecast: List<FiveForecastResponse.Cod>,var clickInterface: RecycleViewItemClickInterface): RecyclerView.Adapter<ForecastAdapter.ForecastViewHolder>() {
+
+class ForecastAdapter(var forecast: List<FiveForecastResponse.Cod>, var clicklisner:RecycleViewItemClickInterface): RecyclerView.Adapter<ForecastAdapter.ForecastViewHolder>() {
 
     companion object{
         private val TAG = "ForecastAdapter"
@@ -34,10 +34,10 @@ class ForecastAdapter(private val forecast: List<FiveForecastResponse.Cod>,var c
 
 
     //inflating the layout that will be shown to the user
+    @SuppressLint("ResourceAsColor")
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ForecastViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.fivedays_forecast_listview,parent,false)
-
         return ForecastViewHolder(view)
     }
 
@@ -72,8 +72,7 @@ class ForecastAdapter(private val forecast: List<FiveForecastResponse.Cod>,var c
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: ForecastViewHolder, position: Int) {
 
-        holder.bind(forecast[position],clickInterface)
-
+        holder.bind(forecast.get(position),clicklisner)
 
     }
 
@@ -82,15 +81,12 @@ class ForecastAdapter(private val forecast: List<FiveForecastResponse.Cod>,var c
     override fun getItemCount(): Int = forecast.size
 
 
-    class ForecastViewHolder(itemView: View): RecyclerView.ViewHolder(itemView),RecycleViewItemClickInterface{
+    class ForecastViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
 
         //lateinit var recycleViewItemClickInterface:RecycleViewItemClickInterface
         val weekDay = itemView.findViewById<TextView>(R.id.txt_weekdays)
-        private val weather = itemView.findViewById<TextView>(R.id.img_forecast)
+        private val weatherIcon = itemView.findViewById<ImageView>(R.id.img_forecast)
         private val temperature = itemView.findViewById<TextView>(R.id.txt_temperature)
-
-
-
 
 
         //here am assigning the returned values to all relevent fields
@@ -99,34 +95,50 @@ class ForecastAdapter(private val forecast: List<FiveForecastResponse.Cod>,var c
 
             Log.d(TAG,"BINDING_DATA $data")
 
-            //here will loop 5 times beacuse of the 5 days forecast data to be shown
-          /*  weekDay.text = data.list.get(0).dt.toString()
-
-            weather.text = data.list.get(0).weather.get(0).main
-            // weather.setImageResource(R.drawable.clear)
-            temperature.text = data.list.get(0).main.temp.toString()*/
-
             var dateTimeText:String = getWeekdays(data.dtTxt)
             weekDay.text = dateTimeText
 
-            weather.text = data.weather.get(0).main
+            //will use the returned text to set weather icon:
+            var iconText: String? = data.weather.get(0).main
+
+            if(iconText.equals("Clear")){
+                //set the clear icon
+                weatherIcon.setImageResource(R.drawable.clear)
+
+                //inflate the cloudy layout
+
+            }else if(iconText.equals("Rain")){
+                //set the rain icon
+                weatherIcon.setImageResource(R.drawable.rain)
+
+                //inflate the cloudy layout
+
+            }else if (iconText.equals("Sun")){
+                //set the sunny icon
+                weatherIcon.setImageResource(R.drawable.partlysunny)
+
+
+                //inflate the cloudy layout
+            }
+
+            Log.d(TAG,"ICON_TEXT: $iconText")
+
+
+            //will have to inflate different layout based on the weather main value
+
+
+
+
+            //weatherIcon.text = data.weather.get(0).main
             // weather.setImageResource(R.drawable.clear)
             var covertedTemp:String = convertToOneDegit(data.main.temp)
             temperature.text = covertedTemp +"\u2103"
 
 
-            //recycleViewItemClickInterface = recycleViewItemClickInterface
-            //this will listen when the view is clicked and perform action
-            //itemView.setOnClickListener(this)
 
             itemView.setOnClickListener {
-               action.onItemClicked(data,adapterPosition)
+               action.onItemClick(data,adapterPosition)
             }
-
-            /*weekDay.setOnClickListener {
-                Log.d(TAG,"ADPTER_MORE_DETAILS")
-
-            }*/
 
 
         }
@@ -148,13 +160,16 @@ class ForecastAdapter(private val forecast: List<FiveForecastResponse.Cod>,var c
             return LocalDate.parse(digtValue,inputFormat).format(outputFormat)
         }
 
-        override fun onItemClicked(data: FiveForecastResponse.Cod, position: Int) {
-            TODO("Not yet implemented")
-        }
-
 
     }
 
+    //the interface that will help me to move to another activity
+    interface RecycleViewItemClickInterface {
+
+        //this will help me to mgo to another activity to view more details
+        fun onItemClick(data: FiveForecastResponse.Cod, position:Int)
+
+    }
 
 
 
