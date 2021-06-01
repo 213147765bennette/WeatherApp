@@ -77,8 +77,12 @@ class FavouritresAdapter(
         private val txtFullDescr = itemView.findViewById<TextView>(R.id.txtDescription)
         private val weatherIcon = itemView.findViewById<ImageView>(R.id.imgIcon)
         private val txtDate = itemView.findViewById<TextView>(R.id.txtDate)
-        private val txtWeekDay = itemView.findViewById<TextView>(R.id.txtWeekDay)
+        private val txtFeelsLike = itemView.findViewById<TextView>(R.id.txtPressure)
+        private val txtPressure = itemView.findViewById<TextView>(R.id.txtFells)
+
+        //delete button
         private val deleteButton = itemView.findViewById<ShapeableImageView>(R.id.fab_favourites)
+
 
         //CITY
         private val txtCityName = itemView.findViewById<TextView>(R.id.txtDate)
@@ -96,8 +100,10 @@ class FavouritresAdapter(
             txtFullDescr.text = data.description+"\u2103"
 
             txtDate.text = data.date
-            txtWeekDay.text = data.week_day
-            txtCityName.text = data.city_name
+            txtPressure.text = data.pressure +"\u2103"
+            txtFeelsLike.text = data.feelsLike +"\u2103"
+
+
 
             //will use the returned text to set weather icon:
             var iconText: String? = data.icon

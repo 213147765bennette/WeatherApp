@@ -38,8 +38,8 @@ class MoreForecastInfo : AppCompatActivity() {
     private lateinit var txtFullDescr: TextView
     private lateinit var imgIcon: ImageView
     private lateinit var txtDate: TextView
-    private lateinit var txtWeekDay: TextView
-    private lateinit var txtCityNAme: TextView
+    private lateinit var txtPressure: TextView
+    private lateinit var txtFells: TextView
 
 
     var doubleTemperatue:Double = 0.0
@@ -81,8 +81,9 @@ class MoreForecastInfo : AppCompatActivity() {
         txtFullDescr = findViewById(R.id.txtDescription)
         imgIcon = findViewById(R.id.imgIcon)
         txtDate = findViewById(R.id.txtDate)
-        txtWeekDay = findViewById(R.id.txtWeekDay)
-        txtCityNAme = findViewById(R.id.txtCityNAme)
+        txtPressure = findViewById(R.id.txtPressure)
+        txtFells = findViewById(R.id.txtFells)
+
 
 
         //now set values to show on my design
@@ -91,8 +92,8 @@ class MoreForecastInfo : AppCompatActivity() {
         txtTempMax.text = intent.getStringExtra("TEMPMAX").toString()+ "\u2103"
         txtMainDescr.text = intent.getStringExtra("MAINDESCR").toString()
         txtFullDescr.text = intent.getStringExtra("FULLDESCR").toString()
-        txtCityNAme.text = intent.getStringExtra("CITY_NAME").toString()
-        txtWeekDay.text = intent.getStringExtra("WEEKDAY").toString()
+        txtPressure.text = intent.getStringExtra("PRESSURE").toString()
+        txtFells.text = intent.getStringExtra("FEELS").toString()
         txtDate.text = intent.getStringExtra("DATE").toString()
 
 
@@ -155,14 +156,24 @@ class MoreForecastInfo : AppCompatActivity() {
         dialog.positiveButton(R.string.dialog_save) {
 
             //get values passed using my intent from home fragment and set them to my mutable live date to store on roomdb
-    /*        foreCastViewModel.temperature.value = intent.getStringExtra("TEMPERATURE")
-            foreCastViewModel.temp_min.value = intent.getStringExtra("TEMPMIN")
-            foreCastViewModel.temp_max.value = intent.getStringExtra("TEMPMAX")
-            foreCastViewModel.main_descr.value = intent.getStringExtra("MAINDESCR")
-            foreCastViewModel.full_description.value = intent.getStringExtra("FULLDESCR")
+
+            //now set values to show on my design
+            foreCastViewModel.temperature.value = intent.getStringExtra("TEMPERATURE").toString() + "\u2103"
+            foreCastViewModel.temp_min.value = intent.getStringExtra("TEMPMIN").toString()+ "\u2103"
+            foreCastViewModel.temp_max.value = intent.getStringExtra("TEMPMAX").toString()+ "\u2103"
+            foreCastViewModel.main_descr.value = intent.getStringExtra("MAINDESCR").toString()
+            foreCastViewModel.full_description.value = intent.getStringExtra("FULLDESCR").toString()
             foreCastViewModel.icon.value = intent.getStringExtra("ICON")
-*/
-            foreCastViewModel.temperature.value = "25"
+            foreCastViewModel.pressure.value = intent.getStringExtra("PRESSURE").toString()+ "\u2103"
+            foreCastViewModel.feelsLike.value = intent.getStringExtra("FEELS").toString()+ "\u2103"
+            foreCastViewModel.date.value = intent.getStringExtra("DATE").toString()
+
+            //now insert the data to roomdb
+            foreCastViewModel.insertForecast()
+
+
+
+            /*foreCastViewModel.temperature.value = "25"
             foreCastViewModel.temp_min.value = "-10"
             foreCastViewModel.temp_max.value = "85"
             foreCastViewModel.main_descr.value = "Sun"
@@ -170,17 +181,13 @@ class MoreForecastInfo : AppCompatActivity() {
             foreCastViewModel.icon.value = "Clear"
             foreCastViewModel.city_name.value = "Tembisa"
             foreCastViewModel.week_day.value = "Saturday"
-            foreCastViewModel.date.value = "21-May-2021"
+            foreCastViewModel.date.value = "21-May-2021"*/
 
 
             //here to call the method of persiting to roomdb
             //Toast.makeText(this,
                 //R.string.dialog_add_message,Toast.LENGTH_LONG).show()
           // dialog.dismiss()
-
-            //now insert the data to roomdb
-            foreCastViewModel.insertForecast()
-
 
         }
 

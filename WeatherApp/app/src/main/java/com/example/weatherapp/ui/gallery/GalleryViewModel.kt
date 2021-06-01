@@ -35,13 +35,11 @@ class GalleryViewModel(application: Application) : AndroidViewModel(application)
     val temp_max: MutableLiveData<String> = MutableLiveData()
     val main: MutableLiveData<String> = MutableLiveData()
     val date: MutableLiveData<String> = MutableLiveData()
-    val week_day: MutableLiveData<String> = MutableLiveData()
+    val pressure: MutableLiveData<String> = MutableLiveData()
     val description: MutableLiveData<String> = MutableLiveData()
     val icon: MutableLiveData<String> = MutableLiveData()
+    val feelsLike: MutableLiveData<String> = MutableLiveData()
     val favouratesList : MutableLiveData<List<FiveforecastEntity>> = MutableLiveData()
-
-    //To be included
-    val city_name: MutableLiveData<String> = MutableLiveData()
 
 
 
@@ -117,9 +115,9 @@ class GalleryViewModel(application: Application) : AndroidViewModel(application)
             main = main.value.toString(),
             description = description.value.toString(),
             icon = icon.value.toString(),
-            city_name =  city_name.value.toString(),
-            date = date.value.toString(),
-            week_day =  week_day.value.toString()
+            pressure =  pressure.value.toString(),
+            feelsLike = feelsLike.value.toString(),
+            date =  date.value.toString()
         )
     }
 

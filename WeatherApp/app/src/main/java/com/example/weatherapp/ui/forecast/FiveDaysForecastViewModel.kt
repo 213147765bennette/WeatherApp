@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.room.ColumnInfo
+import androidx.room.PrimaryKey
 import com.example.weatherapp.entity.FiveforecastEntity
 import com.example.weatherapp.local.db.DatabaseService
 import com.example.weatherapp.repository.RoomRepository
@@ -30,8 +31,8 @@ class FiveDaysForecastViewModel(application: Application) : ViewModel() {
     val main_descr: MutableLiveData<String> = MutableLiveData()
     val full_description: MutableLiveData<String> = MutableLiveData()
     val icon: MutableLiveData<String> = MutableLiveData()
-    val city_name: MutableLiveData<String> = MutableLiveData()
-    val country: MutableLiveData<String> = MutableLiveData()
+    val pressure: MutableLiveData<String> = MutableLiveData()
+    val feelsLike: MutableLiveData<String> = MutableLiveData()
     val date: MutableLiveData<String> = MutableLiveData()
     val week_day: MutableLiveData<String> = MutableLiveData()
 
@@ -64,12 +65,13 @@ class FiveDaysForecastViewModel(application: Application) : ViewModel() {
             main = main_descr.value.toString(),
             description = full_description.value.toString(),
             icon = icon.value.toString(),
-            city_name = city_name.value.toString(),
-            date = date.value.toString(),
-            week_day =  week_day.value.toString()
+            pressure = pressure.value.toString(),
+            feelsLike = feelsLike.value.toString(),
+            date =  date.value.toString()
         
         )
     }
+
 
 
 }

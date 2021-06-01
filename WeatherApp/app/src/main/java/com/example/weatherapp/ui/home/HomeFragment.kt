@@ -2,13 +2,19 @@ package com.example.weatherapp.ui.home
 
 import android.content.Intent
 import android.location.LocationManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CalendarView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.cardview.widget.CardView
+import androidx.core.graphics.drawable.toDrawable
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -19,6 +25,8 @@ import com.example.weatherapp.R
 import com.example.weatherapp.response.FiveForecastResponse
 import com.example.weatherapp.ui.adapter.ForecastAdapter
 import java.text.DecimalFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 
@@ -63,6 +71,11 @@ class HomeFragment : Fragment() , ForecastAdapter.RecycleViewItemClickInterface 
         val txtSmallCurrentTemp: TextView = root.findViewById(R.id.txt_current_value)
         val txtTempMax: TextView = root.findViewById(R.id.txt_max_value)
 
+        //to use to change background images and colours : layoutImage  weather_cardview recyclerView
+
+        val layoutImage:LinearLayout = root.findViewById<LinearLayout>(R.id.weather_image)
+        val weather_cardview:CardView = root.findViewById<CardView>(R.id.weather_cardview)
+
         val recyclerView: RecyclerView = root.findViewById(R.id.rv_fivedays_forecast)
 
         //fiveForecastResponse = ArrayList()
@@ -74,6 +87,32 @@ class HomeFragment : Fragment() , ForecastAdapter.RecycleViewItemClickInterface 
 
         //used to observe the top current temperature
        homeViewModel.currentTopWeatherLive.observe(viewLifecycleOwner, Observer {
+
+           //change backgground here
+           //layoutImage  weather_cardview recyclerView
+           if(it.weather.get(0).main.equals("Clouds")){
+
+               Log.d(TAG,"===========CLOUDS============")
+               layoutImage.setBackgroundResource(R.drawable.sea_cloudy)
+               weather_cardview.setBackgroundColor(resources.getColor(R.color.cloudy) )
+               recyclerView.setBackgroundColor(resources.getColor(R.color.cloudy))
+
+           }else if (it.weather.get(0).main.equals("Clear")){
+
+               Log.d(TAG,"===========CLEAR============")
+               layoutImage.setBackgroundResource(R.drawable.sea_rainy)
+               weather_cardview.setBackgroundColor(resources.getColor(R.color.rainy) )
+               recyclerView.setBackgroundColor(resources.getColor(R.color.rainy))
+
+           }else if (it.weather.get(0).main.equals("Rain")){
+
+               Log.d(TAG,"===========RAIN============")
+               layoutImage.setBackgroundResource(R.drawable.sea_rainy)
+              weather_cardview.setBackgroundColor(resources.getColor(R.color.rainy) )
+              recyclerView.setBackgroundColor(resources.getColor(R.color.rainy))
+
+           }
+
 
            var bigTemperature: String = convertToOneDegit(it.main.temp)
            txtBigCurrentTemp.text = bigTemperature + "\u2103"
@@ -91,19 +130,8 @@ class HomeFragment : Fragment() , ForecastAdapter.RecycleViewItemClickInterface 
 
            Log.d(TAG,"VIEW_CURRENT: $it")
 
-           if(it.weather.get(0).main.equals("Clear")){
 
-               root  = inflater.inflate(R.layout.fragment_home_rainny, container, false)
 
-           }else if (it.weather.get(0).main.equals("Rain")){
-
-               Log.d(TAG,"===========RAIN============")
-               root  = inflater.inflate(R.layout.fragment_home_rainny, container, false)
-
-           }else if (it.weather.get(0).main.equals("Sun")){
-
-               root  = inflater.inflate(R.layout.fragment_home_rainny, container, false)
-           }
 
         })
 
@@ -166,39 +194,51 @@ class HomeFragment : Fragment() , ForecastAdapter.RecycleViewItemClickInterface 
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onItemClick(data: FiveForecastResponse.Cod, position: Int) {
         Log.d(TAG,"HAPPY_AM_CLIKED_IN_FRAGMENT")
 
         //used toast for testing
         //Toast.makeText(context,"clods: ${data.clouds} ${data.main.temp}",Toast.LENGTH_LONG).show()
 
-        var doubleVal:Double =  fivedaysList.get(0).main.temp
+        Toast.makeText(context,"POSITION CLICKED: ${position}",Toast.LENGTH_LONG).show()
 
-        Log.d(TAG, doubleVal.toString())
+        var dateTimeText:String = getWeekdays(data.dtTxt)
+
 
         val intent = Intent(activity, MoreForecastInfo::class.java)
 
-        intent.putExtra("TEMPERATURE",fivedaysList.get(0).main.temp.toString())
-        intent.putExtra("TEMPMIN",fivedaysList.get(0).main.tempMin.toString())
-        intent.putExtra("TEMPMAX",fivedaysList.get(0).main.tempMax.toString())
-        intent.putExtra("MAINDESCR", fivedaysList.get(0).weather[0].main)
-        intent.putExtra("FULLDESCR", fivedaysList.get(0).weather[0].description)
-        intent.putExtra("CITY_NAME", fivedaysList.get(0).weather[0].description)
-        intent.putExtra("WEEKDAY", fivedaysList.get(0).weather[0].description)
-        intent.putExtra("DATE", fivedaysList.get(0).weather[0].description)
+        intent.putExtra("TEMPERATURE",data.main.temp.toString())
+        intent.putExtra("TEMPMIN",data.main.tempMin.toString())
+        intent.putExtra("TEMPMAX",data.main.tempMax.toString())
+        intent.putExtra("MAINDESCR", data.weather[position].main)
+        intent.putExtra("FULLDESCR", data.weather[position].description)
+        intent.putExtra("PRESSURE", data.main.pressure.toString())
+        intent.putExtra("FEELS", data.main.feelsLike.toString())
+        intent.putExtra("DATE", dateTimeText)
 
 
+        /*  intent.putExtra("TEMPERATURE",fivedaysList.get(0).main.temp.toString())
+          intent.putExtra("TEMPMIN",fivedaysList.get(0).main.tempMin.toString())
+          intent.putExtra("TEMPMAX",fivedaysList.get(0).main.tempMax.toString())
+          intent.putExtra("MAINDESCR", fivedaysList.get(0).weather[0].main)
+          intent.putExtra("FULLDESCR", fivedaysList.get(0).weather[0].description)
+          intent.putExtra("CITY_NAME", fivedaysList.get(0).weather[0].description)
+          intent.putExtra("WEEKDAY", fivedaysList.get(0).weather[0].description)
+          intent.putExtra("DATE", fivedaysList.get(0).weather[0].description)
+  */
 
-
-
-        /* intent.putExtra("TEMPERATURE","25")
-         intent.putExtra("TEMPMIN","12")
-         intent.putExtra("TEMPMAX","85")
-         intent.putExtra("MAINDESCR", "Rain")
-         intent.putExtra("FULLDESCR", "Shower Rain")
-         intent.putExtra("ICON", "Clear")*/
 
         startActivity(intent)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getWeekdays(digtValue: String):String{
+
+        var inputFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
+        var outputFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("EEEE", Locale.ENGLISH)
+
+        return LocalDate.parse(digtValue,inputFormat).format(outputFormat)
     }
 
 
