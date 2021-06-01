@@ -126,6 +126,11 @@ class HomeFragment : Fragment() , ForecastAdapter.RecycleViewItemClickInterface 
               recyclerView.setBackgroundColor(resources.getColor(R.color.rainy))
                weather_cardview.setCardBackgroundColor(Color.parseColor("#57575D"))
 
+           }else{
+               layoutImage.setBackgroundResource(R.drawable.sea_sunnypng)
+               //weather_cardview.setCardBackgroundColor(R.color.sunny)
+               recyclerView.setBackgroundColor(resources.getColor(R.color.weather_blue))
+               weather_cardview.setCardBackgroundColor(Color.parseColor("#4c94e3"))
            }
 
 
@@ -145,7 +150,13 @@ class HomeFragment : Fragment() , ForecastAdapter.RecycleViewItemClickInterface 
 
            Log.d(TAG,"VIEW_CURRENT: $it")
 
+            //inflating the customadapter
+           recyclerView.apply {
+               layoutManager = linearLayoutManager
 
+               adapter = forecastAdapter
+
+           }
 
 
         })
