@@ -250,16 +250,15 @@ class HomeFragment : Fragment() , ForecastAdapter.RecycleViewItemClickInterface 
         startActivity(intent)
     }
 
+
     @RequiresApi(Build.VERSION_CODES.O)
     fun getWeekdays(digtValue: String):String{
 
         var inputFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
-        var outputFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("EEEE", Locale.ENGLISH)
+        var outputFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("EEE, d MMM yyyy", Locale.ENGLISH)
 
         return LocalDate.parse(digtValue,inputFormat).format(outputFormat)
     }
-
-
 
 
 

@@ -93,15 +93,15 @@ class FavouritresAdapter(
 
             Log.d(TAG,"BINDING_DATA $data")
 
-            txtTemperature.text = data.temperature +"\u2103"
-            txtTempMin.text = data.temp_min +"\u2103"
-            txtTempMax.text = data.temp_max +"\u2103"
-            txtMainDescr.text = data.main+"\u2103"
-            txtFullDescr.text = data.description+"\u2103"
+            txtTemperature.text = data.temperature
+            txtTempMin.text = data.temp_min
+            txtTempMax.text = data.temp_max
+            txtMainDescr.text = data.main
+            txtFullDescr.text = data.description
 
             txtDate.text = data.date
-            txtPressure.text = data.pressure +"\u2103"
-            txtFeelsLike.text = data.feelsLike +"\u2103"
+            txtPressure.text = data.pressure
+            txtFeelsLike.text = data.feelsLike
 
 
 
@@ -138,7 +138,7 @@ class FavouritresAdapter(
         fun getWeekdays(digtValue: String):String{
 
             var inputFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
-            var outputFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("EEEE", Locale.ENGLISH)
+            var outputFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("EEEE ", Locale.ENGLISH)
 
             return LocalDate.parse(digtValue,inputFormat).format(outputFormat)
         }

@@ -105,6 +105,7 @@ class ForecastAdapter(var forecast: List<FiveForecastResponse.Cod>, var clicklis
                 //set the clear icon
                 weatherIcon.setImageResource(R.drawable.clear)
 
+                //set ton rain icon for testing favourites icons
                 //inflate the cloudy layout
 
             }else if(iconText.equals("Rain")){
@@ -113,7 +114,7 @@ class ForecastAdapter(var forecast: List<FiveForecastResponse.Cod>, var clicklis
 
                 //inflate the cloudy layout
 
-            }else if (iconText.equals("Sun")){
+            }else if (iconText.equals("Sunny")){
                 //set the sunny icon
                 weatherIcon.setImageResource(R.drawable.partlysunny)
 

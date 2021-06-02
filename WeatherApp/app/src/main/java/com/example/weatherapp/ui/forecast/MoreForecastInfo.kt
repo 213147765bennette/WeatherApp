@@ -86,10 +86,9 @@ class MoreForecastInfo : AppCompatActivity() {
         txtTempMax.text = intent.getStringExtra("TEMPMAX").toString()+ "\u2103"
         txtMainDescr.text = intent.getStringExtra("MAINDESCR").toString()
         txtFullDescr.text = intent.getStringExtra("FULLDESCR").toString()
-        txtPressure.text = intent.getStringExtra("PRESSURE").toString()
-        txtFells.text = intent.getStringExtra("FEELS").toString()
+        txtPressure.text = intent.getStringExtra("PRESSURE").toString()+ "\u2103"
+        txtFells.text = intent.getStringExtra("FEELS").toString()+ "\u2103"
         txtDate.text = intent.getStringExtra("DATE").toString()
-
 
 
 
@@ -98,13 +97,14 @@ class MoreForecastInfo : AppCompatActivity() {
         //will use the returned text to set weather icon:
         var iconText: String? = intent.getStringExtra("MAINDESCR").toString()
 
+
         if(iconText.equals("Clear")){
             imgIcon.setImageResource(R.drawable.clear)
 
         }else if(iconText.equals("Rain")){
             imgIcon.setImageResource(R.drawable.rain)
 
-        }else if (iconText.equals("Sun")){
+        }else if (iconText.equals("Sunny")){
             imgIcon.setImageResource(R.drawable.partlysunny)
         }
 
