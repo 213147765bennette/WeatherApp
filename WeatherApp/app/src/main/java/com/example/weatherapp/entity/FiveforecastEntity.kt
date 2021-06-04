@@ -29,7 +29,13 @@ data class FiveforecastEntity(
     @ColumnInfo(name = "feelsLike")
     var feelsLike: String,
     @ColumnInfo(name = "date")
-    var date: String
+    var date: String,
+    @ColumnInfo(name = "city_name")
+    var city_name: String,
+    @ColumnInfo(name = "country_name")
+    var country_name: String
+
+
 
 
 

@@ -23,6 +23,9 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import retrofit2.http.Query
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 class HomeViewModel: ViewModel() {
 
@@ -46,11 +49,27 @@ class HomeViewModel: ViewModel() {
 
         currentTaskRepository = TaskRepository(Networking.currentWeatherRetriver(WeatherApis.BASE_URL))
 
+        //handle if the user current lat lng values are null use the default ones
+           var lat = -26.0209
+           var lon=28.1995
+
         //call function to get current weather using Users current lat and lon
-        getTopUserCurrentWeather(MainActivity.latitude.toString(),MainActivity.longitude.toString())
+        if(MainActivity.latitude.toString() != "" && MainActivity.longitude.toString() != ""){
+
+            getTopUserCurrentWeather(MainActivity.latitude.toString(),MainActivity.longitude.toString())
+
+        }else{
+            getTopUserCurrentWeather(lat.toString(),lon.toString())
+        }
 
         //call function to get five days forecast weather data using Users current lat and lon
-        getFiveDaysUserCurrentForecast(MainActivity.latitude.toString(),MainActivity.longitude.toString())
+        if(MainActivity.latitude.toString() !="" && MainActivity.longitude.toString() !=""){
+            getFiveDaysUserCurrentForecast(MainActivity.latitude.toString(),MainActivity.longitude.toString())
+
+        }else{
+            getFiveDaysUserCurrentForecast(lat.toString(),lon.toString())
+
+        }
 
         //call function to get current weather data
         // getTopCurrentWeather()
@@ -70,6 +89,7 @@ class HomeViewModel: ViewModel() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     {
+
                         currentTopWeatherLive.value = it
                         Log.d(TAG,"USER WEATHER DATA WITH LON LAT: $it")
 
@@ -147,7 +167,6 @@ class HomeViewModel: ViewModel() {
                 )
         )
     }
-
 
 
     private val _text = MutableLiveData<String>().apply {

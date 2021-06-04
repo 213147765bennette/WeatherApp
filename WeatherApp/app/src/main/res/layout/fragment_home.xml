@@ -57,7 +57,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            app:layout_constraintTop_toBottomOf="@id/weather_image"
+            android:layout_marginTop="80dp"
+            app:layout_constraintTop_toBottomOf="@id/txxMain_description"
             android:orientation="vertical">
 
             <LinearLayout

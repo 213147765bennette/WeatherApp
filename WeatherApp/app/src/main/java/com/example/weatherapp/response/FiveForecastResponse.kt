@@ -36,7 +36,7 @@ data class FiveForecastResponse(
         @SerializedName("sys")
         val sys: Sys,
         @SerializedName("dt_txt")
-        val dtTxt: String
+        var dtTxt: String
     ) {
         @Keep
         data class Main(

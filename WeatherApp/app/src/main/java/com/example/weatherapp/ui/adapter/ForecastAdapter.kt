@@ -14,10 +14,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.R
 import com.example.weatherapp.response.FiveForecastResponse
-import com.example.weatherapp.ui.forecast.MoreForecastInfo
-import java.text.DecimalFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
+import com.google.gson.Gson
+import java.text.*
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.temporal.ChronoUnit
 import java.util.*
 
 
@@ -90,13 +91,15 @@ class ForecastAdapter(var forecast: List<FiveForecastResponse.Cod>, var clicklis
 
 
         //here am assigning the returned values to all relevent fields
+
         @RequiresApi(Build.VERSION_CODES.O)
         fun bind(data: FiveForecastResponse.Cod, action:RecycleViewItemClickInterface){
 
+
             Log.d(TAG,"BINDING_DATA $data")
 
-            var dateTimeText:String = getWeekdays(data.dtTxt)
-            weekDay.text = dateTimeText
+             var dateTimeText:String = getWeekdays(data.dtTxt)
+             weekDay.text = dateTimeText
 
             //will use the returned text to set weather icon:
             var iconText: String? = data.weather.get(0).main
@@ -144,20 +147,53 @@ class ForecastAdapter(var forecast: List<FiveForecastResponse.Cod>, var clicklis
         }
 
         fun convertToOneDegit(digtValue:Double):String{
+            var locale:Locale = Locale("en","UK")
+            var pattern:String = "##"
 
-            var decimalFormat: DecimalFormat = DecimalFormat("0")
+            var decimalFormat:DecimalFormat = NumberFormat.getNumberInstance(locale) as DecimalFormat
+            decimalFormat.applyPattern(pattern)
+
+            return decimalFormat.format(digtValue)
+
+          /*  var locale = Locale.getDefault()
+            var decimalFormatSymbols = DecimalFormatSymbols(locale)
+            var decimalFormat = DecimalFormat("0",decimalFormatSymbols)
             var formatedVal = decimalFormat.format(digtValue)
 
-            return formatedVal
+            return formatedVal*/
         }
 
         @RequiresApi(Build.VERSION_CODES.O)
+        @SuppressLint("SimpleDateFormat")
         fun getWeekdays(digtValue: String):String{
+
+                Log.d(TAG,"BEFORE: $digtValue")
+
+                var simpleDateformat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                var myDate: Date
+
+                myDate = simpleDateformat.parse(digtValue)
+
+                Log.d(TAG,"MYDATE: $myDate")
+
+                var cal:Calendar = GregorianCalendar()
+                cal.time =myDate
+
+                //addind my extra 21 hours here to my current recived date time
+
+               // cal.add(Calendar.HOUR_OF_DAY,24)
+
+                Log.d(TAG,"AFTER: ${cal.time}")
+
+                val formatter: DateFormat = SimpleDateFormat("EEEE", Locale.ENGLISH)
+
+                return formatter.format(cal.time)
+/*
 
             var inputFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
             var outputFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("EEEE", Locale.ENGLISH)
 
-            return LocalDate.parse(digtValue,inputFormat).format(outputFormat)
+            return LocalDate.parse(digtValue,inputFormat).format(outputFormat)*/
         }
 
 

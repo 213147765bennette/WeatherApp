@@ -41,4 +41,7 @@
 
 
     <string name="API_KEY">3c2c9119fd96f5765412b2eb67d81316</string>
+
+    <string name="google_map_api_key">AIzaSyCdwUJvQjWQzUR5VRbdxDPXuE48HIbBkiQ</string>
+
 </resources>

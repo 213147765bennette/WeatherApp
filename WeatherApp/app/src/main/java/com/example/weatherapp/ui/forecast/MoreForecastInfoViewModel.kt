@@ -42,7 +42,8 @@ class MoreForecastInfoViewModel(application: Application): AndroidViewModel(appl
     val date: MutableLiveData<String> = MutableLiveData()
     val pressure: MutableLiveData<String> = MutableLiveData()
     val feelsLike: MutableLiveData<String> = MutableLiveData()
-
+    val cityName: MutableLiveData<String> = MutableLiveData()
+    val countryName: MutableLiveData<String> = MutableLiveData()
 
     fun insertForecast(){
         compositeDisposable.add(
@@ -75,7 +76,9 @@ class MoreForecastInfoViewModel(application: Application): AndroidViewModel(appl
             icon = icon.value.toString(),
             pressure = pressure.value.toString(),
             feelsLike = feelsLike.value.toString(),
-            date =  date.value.toString()
+            date =  date.value.toString(),
+            city_name = cityName.value.toString(),
+            country_name = countryName.value.toString()
 
         )
     }

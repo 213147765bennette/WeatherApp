@@ -3,31 +3,30 @@ package com.example.weatherapp.ui.home
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
-import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CalendarView
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.toDrawable
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.weatherapp.ui.forecast.MoreForecastInfo
 import com.example.weatherapp.R
 import com.example.weatherapp.response.FiveForecastResponse
 import com.example.weatherapp.ui.adapter.ForecastAdapter
+import com.example.weatherapp.ui.forecast.MoreForecastInfo
+import java.text.DateFormat
 import java.text.DecimalFormat
+import java.text.NumberFormat
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -46,12 +45,14 @@ class HomeFragment : Fragment() , ForecastAdapter.RecycleViewItemClickInterface 
     lateinit var fivedaysList:List<FiveForecastResponse.Cod>
     //private lateinit var recylerView: RecyclerView
     lateinit var  root:View
+    private lateinit var cityForecastResponse: FiveForecastResponse.City
 
     private val linearLayoutManager: LinearLayoutManager by lazy {
         LinearLayoutManager(context)
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("ResourceAsColor")
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -158,20 +159,20 @@ class HomeFragment : Fragment() , ForecastAdapter.RecycleViewItemClickInterface 
         homeViewModel.fivedaysForcastWeatherLive.observe(viewLifecycleOwner, Observer {
 
                 val fiveForecastResponse: FiveForecastResponse = it
+                cityForecastResponse = fiveForecastResponse.city
+                Log.d(TAG,"CITY_OBJECT: $cityForecastResponse")
+
                 val forecast:List<FiveForecastResponse> = listOf(fiveForecastResponse)
+
+
 
                 fivedaysList = it.list
 
                 Log.d(TAG,"VIEW_MODEL_CAST_DATA $fivedaysList")
 
-                //forecastAdapter = ForecastAdapter(forecast)
-
                 forecastAdapter = ForecastAdapter(fivedaysList,this)
 
-
                 forecastAdapter.setList(forecast)
-
-
 
                 //inflating the customadapter
                 recyclerView.apply {
@@ -194,7 +195,6 @@ class HomeFragment : Fragment() , ForecastAdapter.RecycleViewItemClickInterface 
         })
 
 
-
         //used to get the 5 days Forecast weather results
 
 
@@ -205,10 +205,18 @@ class HomeFragment : Fragment() , ForecastAdapter.RecycleViewItemClickInterface 
     //using this function to convert the temperature to one decimal value
     fun convertToOneDegit(digtValue:Double):String{
 
-        var decimalFormat:DecimalFormat = DecimalFormat("0")
-        var formatedVal = decimalFormat.format(digtValue)
+        var locale:Locale = Locale("en","UK")
+        var pattern:String = "#"
 
-       return formatedVal
+        var decimalFormat:DecimalFormat = NumberFormat.getNumberInstance(locale) as DecimalFormat
+        decimalFormat.applyPattern(pattern)
+
+        return decimalFormat.format(digtValue)
+
+        //var decimalFormat:DecimalFormat = DecimalFormat("0")
+    /*    var formatedVal = decimalFormat.format(digtValue)
+
+       return formatedVal*/
     }
 
 
@@ -226,15 +234,21 @@ class HomeFragment : Fragment() , ForecastAdapter.RecycleViewItemClickInterface 
 
         val intent = Intent(activity, MoreForecastInfo::class.java)
 
-        intent.putExtra("TEMPERATURE",data.main.temp.toString())
-        intent.putExtra("TEMPMIN",data.main.tempMin.toString())
-        intent.putExtra("TEMPMAX",data.main.tempMax.toString())
+        intent.putExtra("TEMPERATURE",convertToOneDegit(data.main.temp))
+        intent.putExtra("TEMPMIN",convertToOneDegit(data.main.tempMin))
+        intent.putExtra("TEMPMAX",convertToOneDegit(data.main.tempMax))
         intent.putExtra("MAINDESCR", data.weather[0].main)
         intent.putExtra("FULLDESCR", data.weather[0].description)
-        intent.putExtra("PRESSURE", data.main.pressure.toString())
-        intent.putExtra("FEELS", data.main.feelsLike.toString())
+        intent.putExtra("PRESSURE", convertToOneDegit(data.main.pressure))
+        intent.putExtra("FEELS", convertToOneDegit(data.main.feelsLike))
         intent.putExtra("DATE", dateTimeText)
 
+        intent.putExtra("CITYNAME",cityForecastResponse.name)
+        intent.putExtra("COUNTRYNAME",cityForecastResponse.country)
+
+        //this two values of Lat and lon will save them to roomdb i will later need them on my map
+        intent.putExtra("LAT",cityForecastResponse.coord.lat.toString())
+        intent.putExtra("LON",cityForecastResponse.coord.lon.toString())
 
         /*  intent.putExtra("TEMPERATURE",fivedaysList.get(0).main.temp.toString())
           intent.putExtra("TEMPMIN",fivedaysList.get(0).main.tempMin.toString())
@@ -251,14 +265,22 @@ class HomeFragment : Fragment() , ForecastAdapter.RecycleViewItemClickInterface 
     }
 
 
+
     @RequiresApi(Build.VERSION_CODES.O)
+    @SuppressLint("SimpleDateFormat")
     fun getWeekdays(digtValue: String):String{
+
+        var simpleDateformat:SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 
         var inputFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
         var outputFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("EEE, d MMM yyyy", Locale.ENGLISH)
 
         return LocalDate.parse(digtValue,inputFormat).format(outputFormat)
+
     }
+
+
+
 
 
 

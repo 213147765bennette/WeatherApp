@@ -34,7 +34,8 @@ class FiveDaysForecastViewModel(application: Application) : ViewModel() {
     val pressure: MutableLiveData<String> = MutableLiveData()
     val feelsLike: MutableLiveData<String> = MutableLiveData()
     val date: MutableLiveData<String> = MutableLiveData()
-    val week_day: MutableLiveData<String> = MutableLiveData()
+    val cityName: MutableLiveData<String> = MutableLiveData()
+    val countryName: MutableLiveData<String> = MutableLiveData()
 
 
     fun insertForecast(){
@@ -66,7 +67,9 @@ class FiveDaysForecastViewModel(application: Application) : ViewModel() {
             icon = icon.value.toString(),
             pressure = pressure.value.toString(),
             feelsLike = feelsLike.value.toString(),
-            date =  date.value.toString()
+            date =  date.value.toString(),
+            city_name = cityName.value.toString(),
+            country_name = countryName.value.toString()
         
         )
     }

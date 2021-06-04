@@ -8,9 +8,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.room.ColumnInfo
 import androidx.room.PrimaryKey
+import com.example.weatherapp.R
 import com.example.weatherapp.entity.FiveforecastEntity
 import com.example.weatherapp.local.db.DatabaseService
 import com.example.weatherapp.repository.RoomRepository
+import com.example.weatherapp.ui.adapter.ForecastAdapter
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -39,10 +41,9 @@ class GalleryViewModel(application: Application) : AndroidViewModel(application)
     val description: MutableLiveData<String> = MutableLiveData()
     val icon: MutableLiveData<String> = MutableLiveData()
     val feelsLike: MutableLiveData<String> = MutableLiveData()
+    val cityName: MutableLiveData<String> = MutableLiveData()
+    val countryName: MutableLiveData<String> = MutableLiveData()
     val favouratesList : MutableLiveData<List<FiveforecastEntity>> = MutableLiveData()
-
-
-
 
 
     init {
@@ -117,11 +118,11 @@ class GalleryViewModel(application: Application) : AndroidViewModel(application)
             icon = icon.value.toString(),
             pressure =  pressure.value.toString(),
             feelsLike = feelsLike.value.toString(),
-            date =  date.value.toString()
+            date =  date.value.toString(),
+            city_name = cityName.value.toString(),
+            country_name = countryName.value.toString()
         )
     }
-
-
 
 
     private val _text = MutableLiveData<String>().apply {

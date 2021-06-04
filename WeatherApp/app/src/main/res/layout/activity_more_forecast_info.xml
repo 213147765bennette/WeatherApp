@@ -5,9 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/main_more_info_layout"
+    android:background="@color/weather_blue"
     tools:context=".ui.forecast.MoreForecastInfo">
 
-    <androidx.cardview.widget.CardView
+ <!--   <androidx.cardview.widget.CardView
         android:id="@+id/main_cardview_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,15 +21,18 @@
         app:layout_constraintTop_toTopOf="@id/main_more_info_layout"
         android:backgroundTint="@color/weather_blue"
         android:orientation="vertical"
-        app:cardCornerRadius="5dp">
+        app:cardCornerRadius="5dp">-->
 
         <LinearLayout
             android:id="@+id/mainLayout_1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginBottom="10dp"
             android:orientation="horizontal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/main_more_info_layout"
             android:paddingStart="8dp"
             android:paddingTop="5dp"
             android:paddingEnd="1dp">
@@ -45,14 +49,123 @@
                 android:paddingTop="1dp"
                 android:paddingEnd="1dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <View
+                    android:id="@+id/view001"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="15dp"
+                    android:background="@color/white" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="1dp"
-                    android:fontFamily="sans-serif-condensed"
-                    android:text="Date Information"
-                    android:textColor="@color/white"
-                    android:textSize="15sp" />
+                    android:weightSum="3"
+                    android:layout_marginBottom="15dp"
+                    android:orientation="horizontal">
+
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:layout_gravity="start"
+                        android:gravity="start"
+                        android:orientation="vertical">
+
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginTop="12dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="City"
+                            android:textColor="@color/white"
+                            android:textSize="15sp" />
+
+
+                        <TextView
+                            android:id="@+id/txtCityName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="1dp"
+                            android:ellipsize="end"
+                            android:fontFamily="sans-serif-condensed"
+                            android:maxWidth="180dp"
+                            android:maxLength="100"
+                            android:padding="0dp"
+                            android:singleLine="false"
+                            android:text="Midrand"
+                            android:textColor="@color/white"
+                            android:textSize="12dp" />
+
+
+                    </LinearLayout>
+
+
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            android:id="@+id/txtBigTemp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="1dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:singleLine="false"
+                            android:text="25"
+                            android:textColor="@color/white"
+                            android:textSize="35dp" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:visibility="visible"
+                        android:layout_marginEnd="50dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginTop="12dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="Country"
+                            android:textColor="@color/white"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/txtCountryName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="1dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:singleLine="false"
+                            android:text="South Africa"
+                            android:textColor="@color/white"
+                            android:textSize="12dp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
                 <View
                     android:id="@+id/view0"
@@ -449,8 +562,10 @@
         </LinearLayout>
 
 
+<!--
 
     </androidx.cardview.widget.CardView>
+-->
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fab_favourites"
@@ -465,7 +580,7 @@
         app:iconTint="@color/white"
         android:backgroundTint="@color/blue"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/main_cardview_1"
+        app:layout_constraintTop_toBottomOf="@id/mainLayout_1"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

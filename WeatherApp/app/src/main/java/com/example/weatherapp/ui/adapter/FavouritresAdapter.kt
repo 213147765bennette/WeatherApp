@@ -79,13 +79,16 @@ class FavouritresAdapter(
         private val txtDate = itemView.findViewById<TextView>(R.id.txtDate)
         private val txtFeelsLike = itemView.findViewById<TextView>(R.id.txtPressure)
         private val txtPressure = itemView.findViewById<TextView>(R.id.txtFells)
+        private val txtCityName = itemView.findViewById<TextView>(R.id.txtCityName)
+        private val txtBigTemp = itemView.findViewById<TextView>(R.id.txtBigTemp)
+        private val txtCountryName = itemView.findViewById<TextView>(R.id.txtCountryName)
+
 
         //delete button
         private val deleteButton = itemView.findViewById<ShapeableImageView>(R.id.fab_favourites)
 
 
-        //CITY
-        private val txtCityName = itemView.findViewById<TextView>(R.id.txtDate)
+
         //here am assigning the returned values to all relevent fields
 
         @SuppressLint("SetTextI18n")
@@ -99,11 +102,13 @@ class FavouritresAdapter(
             txtMainDescr.text = data.main
             txtFullDescr.text = data.description
 
+            txtCityName.text = data.city_name
+            txtBigTemp.text = data.temperature
+            txtCountryName.text = getCountryOnCode(data.country_name)
+
             txtDate.text = data.date
             txtPressure.text = data.pressure
             txtFeelsLike.text = data.feelsLike
-
-
 
             //will use the returned text to set weather icon:
             var iconText: String? = data.icon
@@ -121,7 +126,7 @@ class FavouritresAdapter(
 
                 //inflate the cloudy layout
 
-            }else if (iconText.equals("Sun")){
+            }else if (iconText.equals("Sunny")){
                 //set the sunny icon
                 weatherIcon.setImageResource(R.drawable.partlysunny)
 
@@ -132,6 +137,11 @@ class FavouritresAdapter(
             }
 
 
+        }
+
+        fun getCountryOnCode(countryCode:String):String{
+            var locale = Locale("",countryCode)
+            return locale.getDisplayCountry()
         }
 
         @RequiresApi(Build.VERSION_CODES.O)
