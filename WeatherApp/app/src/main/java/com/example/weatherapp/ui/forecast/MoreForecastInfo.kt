@@ -1,10 +1,12 @@
 package com.example.weatherapp.ui.forecast
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
+import android.widget.ScrollView
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -38,6 +40,7 @@ class MoreForecastInfo : AppCompatActivity() {
     private lateinit var txtCityName: TextView
     private lateinit var txtBigTemp: TextView
     private lateinit var txtCountryName: TextView
+    private lateinit var moreDetailsView: ScrollView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,7 +81,7 @@ class MoreForecastInfo : AppCompatActivity() {
         txtCityName = findViewById(R.id.txtCityName)
         txtCountryName = findViewById(R.id.txtCountryName)
         txtBigTemp = findViewById(R.id.txtBigTemp)
-
+        moreDetailsView = findViewById(R.id.main_more_info_layout)
 
         //now set values to show on my design
         txtTemperature.text = intent.getStringExtra("TEMPERATURE").toString() + "\u2103"
@@ -121,12 +124,19 @@ class MoreForecastInfo : AppCompatActivity() {
 
         if(iconText.equals("Clear")){
             imgIcon.setImageResource(R.drawable.clear)
+            moreDetailsView.setBackgroundColor(Color.parseColor("#4c94e3"))
 
         }else if(iconText.equals("Rain")){
             imgIcon.setImageResource(R.drawable.rain)
+            moreDetailsView.setBackgroundColor(Color.parseColor("#57575D"))
 
         }else if (iconText.equals("Sunny")){
             imgIcon.setImageResource(R.drawable.partlysunny)
+            moreDetailsView.setBackgroundColor(Color.parseColor("#4c94e3"))
+
+        }else if (iconText.equals("Clouds")){
+            imgIcon.setImageResource(R.drawable.partlysunny)
+            moreDetailsView.setBackgroundColor(Color.parseColor("#54717A"))
         }
 
         Log.d(TAG,"ICON_TEXT: $iconText")
@@ -291,6 +301,7 @@ class MoreForecastInfo : AppCompatActivity() {
 
         return formatedVal*/
     }
+
 
 
 }

@@ -83,6 +83,11 @@ class MoreForecastInfoViewModel(application: Application): AndroidViewModel(appl
         )
     }
 
+    override fun onCleared() {
+        compositeDisposable.clear()
+        super.onCleared()
+    }
+
 
 }
 

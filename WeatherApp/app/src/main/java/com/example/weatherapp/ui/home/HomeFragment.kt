@@ -11,9 +11,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.ScrollView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -23,6 +26,7 @@ import com.example.weatherapp.R
 import com.example.weatherapp.response.FiveForecastResponse
 import com.example.weatherapp.ui.adapter.ForecastAdapter
 import com.example.weatherapp.ui.forecast.MoreForecastInfo
+import com.google.android.material.snackbar.Snackbar
 import java.text.DateFormat
 import java.text.DecimalFormat
 import java.text.NumberFormat
@@ -46,6 +50,7 @@ class HomeFragment : Fragment() , ForecastAdapter.RecycleViewItemClickInterface 
     //private lateinit var recylerView: RecyclerView
     lateinit var  root:View
     private lateinit var cityForecastResponse: FiveForecastResponse.City
+    //private lateinit var cordinatorLayout:ScrollView
 
     private val linearLayoutManager: LinearLayoutManager by lazy {
         LinearLayoutManager(context)
@@ -64,7 +69,6 @@ class HomeFragment : Fragment() , ForecastAdapter.RecycleViewItemClickInterface 
         homeViewModel =
                 ViewModelProvider(this).get(HomeViewModel::class.java)
 
-
         root  = inflater.inflate(R.layout.fragment_home, container, false)
 
 
@@ -75,6 +79,7 @@ class HomeFragment : Fragment() , ForecastAdapter.RecycleViewItemClickInterface 
         val txtTempMin: TextView = root.findViewById(R.id.txt_min_value)
         val txtSmallCurrentTemp: TextView = root.findViewById(R.id.txt_current_value)
         val txtTempMax: TextView = root.findViewById(R.id.txt_max_value)
+        //cordinatorLayout = root.findViewById(R.id.main_layout)
 
         //to use to change background images and colours : layoutImage  weather_cardview recyclerView
 
@@ -82,6 +87,7 @@ class HomeFragment : Fragment() , ForecastAdapter.RecycleViewItemClickInterface 
         val weather_cardview:CardView = root.findViewById<CardView>(R.id.weather_cardview)
 
         val recyclerView: RecyclerView = root.findViewById(R.id.rv_fivedays_forecast)
+
 
         //fiveForecastResponse = ArrayList()
         fiveForecastResponse = ArrayList()
@@ -123,8 +129,8 @@ class HomeFragment : Fragment() , ForecastAdapter.RecycleViewItemClickInterface 
 
                Log.d(TAG,"===========RAIN============")
                layoutImage.setBackgroundResource(R.drawable.sea_rainy)
-              //weather_cardview.setBackgroundColor(resources.getColor(R.color.rainy) )
-              recyclerView.setBackgroundColor(resources.getColor(R.color.rainy))
+               //weather_cardview.setBackgroundColor(resources.getColor(R.color.rainy) )
+               recyclerView.setBackgroundColor(resources.getColor(R.color.rainy))
                weather_cardview.setCardBackgroundColor(Color.parseColor("#57575D"))
 
            }else{
@@ -158,6 +164,9 @@ class HomeFragment : Fragment() , ForecastAdapter.RecycleViewItemClickInterface 
         //getting live five days forecast data and setting them on my adapter
         homeViewModel.fivedaysForcastWeatherLive.observe(viewLifecycleOwner, Observer {
 
+
+
+
                 val fiveForecastResponse: FiveForecastResponse = it
                 cityForecastResponse = fiveForecastResponse.city
                 Log.d(TAG,"CITY_OBJECT: $cityForecastResponse")
@@ -188,6 +197,13 @@ class HomeFragment : Fragment() , ForecastAdapter.RecycleViewItemClickInterface 
 
                 }
 
+
+            /*}else{
+                showSnackbar("Network request failed, please check the network or refresh the application.")
+                //Toast.makeText(context, "Network request failed, please check the network..", Toast.LENGTH_SHORT).show()
+            }*/
+
+
         })
 
         homeViewModel.text.observe(viewLifecycleOwner, Observer {
@@ -200,6 +216,11 @@ class HomeFragment : Fragment() , ForecastAdapter.RecycleViewItemClickInterface 
 
         return root
     }
+
+    /*fun showSnackbar(msg:String){
+        val mySnackbar = Snackbar.make(cordinatorLayout,msg,Snackbar.LENGTH_LONG)
+        mySnackbar.show()
+    }*/
 
 
     //using this function to convert the temperature to one decimal value
